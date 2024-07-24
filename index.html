@@ -13,7 +13,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            height:auto;
         }
 
         .form-container {
@@ -21,6 +21,7 @@
             padding: 40px;
             border-radius: 10px;
             box-shadow: 0 0 10px #0f0;
+            
         }
 
         .form-container h1 {
@@ -162,7 +163,7 @@
                     Image</label>
                 <input type="file" accept="image/*" name="image" id="file" onchange="loadFile(event)"
                     style="margin: 18px 0 0px;">
-                <img id="output" width="820px" />
+                <img id="output" width="820px" height="100%"/>
             </div>
 
             <span id="uploadError" class="error">ID is required</span>
