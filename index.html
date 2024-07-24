@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket Movie</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .form-container {
+            background-color: #000000;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #0f0;
+        }
+
+        .form-container h1 {
+            text-align: center;
+
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .form-container input,
+        .form-container select {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 15px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .form-container input[type="submit"],
+        .form-container input[type="reset"] {
+            width: 48%;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .form-container input[type="reset"] {
+            background-color: grey;
+        }
+
+        .form-container input[type="submit"]:hover,
+        .form-container input[type="reset"]:hover {
+            opacity: 0.8;
+        }
+
+        .error {
+            color: red;
+            display: none;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: row;
+            gap: 60px
+        }
+
+        .form-container {
+            width: 900px;
+            margin-top: 100px;
+        }
+
+        .wraper {
+            width: 95%;
+        }
+
+        #file {
+            border: solid 1px;
+
+        }
+
+        #upload {
+            padding: 0;
+            margin-top: 15px;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="form-container">
+        <h1>Ticket Movie</h1>
+        <form id="ticketForm">
+            <div class="container">
+                <div class="wraper">
+                    <h3>First Name:</h3>
+                    <input type="text" id="firstName" name="firstName">
+                    <span id="firstNameError" class="error">First name is required</span>
+                </div>
+                <div class="wraper">
+                    <h3>Last Name:</h3>
+                    <input type="text" id="lastName" name="lastName">
+                    <span id="lastNameError" class="error">Last name is required</span>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="wraper">
+                    <h3>Email:</h3>
+                    <input type="email" id="email" name="email">
+                    <span id="emailError" class="error">Email is required</span>
+                </div>
+                <div class="wraper">
+                    <h3>Phone Number:</h3>
+                    <input type="tel" id="phone" name="phone">
+                    <span id="phoneError" class="error">Phone number is required</span>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="wraper">
+                    <h3>Gender:</h3>
+                    <select id="gender" name="gender">
+                        <option value="">Select Gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                    </select>
+                    <span id="genderError" class="error">Gender is required</span>
+                </div>
+                <div class="wraper">
+                    <h3>Age:</h3>
+                    <select id="age" name="age">
+                        <option value="">Select Age</option>
+                        <option value="option1">Below 7 years old</option>
+                        <option value="option2">7-13 years old</option>
+                        <option value="option3">13-18 years old</option>
+                        <option value="option4">Above 18 years old</option>
+                    </select>
+                    <span id="ageError" class="error">Age is required</span>
+                </div>
+            </div>
+
+            <h3>Movie:</h3>
+            <select id="movie" name="movie">
+                <option value="">Select Movie</option>
+                <option value="movie1">Inside Out 2</option>
+                <option value="movie2">My Neighbor Totoro</option>
+                <option value="movie3">The Breakfast Club</option>
+                <option value="movie4">The Wolf of Wall Street</option>
+            </select>
+            <span id="movieError" class="error">Movie selection is required</span>
+
+            <div id="upload">
+                <label for="file"
+                    style="cursor: pointer; font-weight: 700; font-size: 18.72px; margin-top: 10px;">Upload
+                    Image</label>
+                <input type="file" accept="image/*" name="image" id="file" onchange="loadFile(event)"
+                    style="margin: 18px 0 0px;">
+                <img id="output" width="820px" />
+            </div>
+
+            <span id="uploadError" class="error">ID is required</span>
+
+            <h3>Password:</h3>
+
+            <input type="password" id="password" name="password">
+            <span id="passwordError" class="error">Password must be at least 8 characters long</span>
+
+            <h3 style="cursor: pointer;" onclick="togglePassword()">Show Password</h3>
+
+            <div style="display: flex; justify-content: space-between;">
+                <input type="submit" value="Submit">
+                <input type="reset" value="Reset">
+            </div>
+        </form>
+    </div>
+
+    <script>
+        var loadFile = function (event) {
+            var image = document.getElementById('output');
+            image.src = URL.createObjectURL(event.target.files[0]);
+        };
+
+        document.getElementById('age').addEventListener('change', function () {
+            const movieoptions = document.getElementById('movie').options;
+            const selectedage = this.options.selectedIndex;
+            for (let i = 0; i < movieoptions.length; i++) {
+                movieoptions[i].disabled = false;
+            }
+            if (selectedage == 1) {
+                for (let i = 0; i < movieoptions.length; i++) {
+                    movieoptions[i + 2].disabled = true;
+                }
+            }
+            if (selectedage == 2) {
+                for (let i = 0; i < movieoptions.length; i++) {
+                    movieoptions[i + 3].disabled = true;
+                }
+            }
+            if (selectedage == 3) {
+                for (let i = 0; i < movieoptions.length; i++) {
+                    movieoptions[i + 4].disabled = true;
+                }
+            }
+            if (selectedage == 4) {
+                for (let i = 0; i < movieoptions.length; i++) {
+                    movieoptions[i + 5].disabled = true;
+                }
+            }
+
+        });
+        let fields = [
+            { id: 'firstName', errorId: 'firstNameError', message: 'First name is required' },
+            { id: 'lastName', errorId: 'lastNameError', message: 'Last name is required' },
+            { id: 'email', errorId: 'emailError', message: 'Email is required' },
+            { id: 'phone', errorId: 'phoneError', message: 'Phone number is required' },
+            { id: 'gender', errorId: 'genderError', message: 'Gender is required' },
+            { id: 'age', errorId: 'ageError', message: 'Age is required' },
+            { id: 'movie', errorId: 'movieError', message: 'Movie selection is required' },
+            { id: 'password', errorId: 'passwordError', message: 'Password must be at least 8 characters long', minLength: 8 }
+        ];
+        document.getElementById('movie').addEventListener('change', function () {
+            document.getElementById("uploadError").style.display = "none";
+            const selectedmovie = this.options.selectedIndex;
+
+            if (selectedmovie == 4) {
+                document.getElementById("upload").style.display = 'block';
+                fields.push({ id: 'file', errorId: 'uploadError', message: 'ID is required' });
+               
+            }
+            else {
+                fields = fields.filter(field => field.id !== 'file');
+                document.getElementById("upload").style.display = 'none';
+
+            }
+        })
+
+        document.getElementById('firstName').addEventListener('focus', function () {
+            document.getElementById("firstNameError").style.display = "none";
+        })
+        document.getElementById('lastName').addEventListener('focus', function () {
+            document.getElementById("lastNameError").style.display = "none";
+        })
+        document.getElementById('email').addEventListener('focus', function () {
+            document.getElementById("emailError").style.display = "none";
+        })
+        document.getElementById('phone').addEventListener('focus', function () {
+            document.getElementById("phoneError").style.display = "none";
+        })
+        document.getElementById('gender').addEventListener('focus', function () {
+            document.getElementById("genderError").style.display = "none";
+        })
+        document.getElementById('age').addEventListener('focus', function () {
+            document.getElementById("ageError").style.display = "none";
+        })
+        document.getElementById('movie').addEventListener('focus', function () {
+            document.getElementById("movieError").style.display = "none";
+        })
+        document.getElementById('password').addEventListener('focus', function () {
+            document.getElementById("passwordError").style.display = "none";
+        })
+
+        document.getElementById('ticketForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            let isValid = true;
+
+            fields.forEach(field => {
+                const input = document.getElementById(field.id);
+                const error = document.getElementById(field.errorId);
+                if (!input.value || (field.minLength && input.value.length < field.minLength)) {
+
+                    error.textContent = field.message;
+                    error.style.display = 'block';
+                    isValid = false;
+                }
+                else {
+                    error.style.display = 'none';
+                }
+            });
+
+            if (isValid) {
+                alert('Form submitted successfully');
+                // You can submit the form data here
+            }
+        });
+        document.getElementById('ticketForm').addEventListener('reset', function (event) {
+            var image = document.getElementById('output');
+            image.src = ' ';
+        })
+        function togglePassword() {
+            const passwordField = document.getElementById('password');
+            const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordField.setAttribute('type', type);
+        }
+
+    </script>
+</body>
+
+</html>
